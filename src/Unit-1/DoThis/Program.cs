@@ -15,8 +15,8 @@ namespace WinTail
 	        
 
 			// time to make your first actors!
-			var consoleWriterActor = MyActorSystem.ActorOf(Props.Create(() => new ConsoleWriterActor()));
-			var consoleReaderActor = MyActorSystem.ActorOf(Props.Create(() => new ConsoleReaderActor(consoleWriterActor)));
+			var consoleWriterActor = MyActorSystem.ActorOf(Props.Create(() => new ConsoleWriterActor()), nameof(ConsoleWriterActor));
+			var consoleReaderActor = MyActorSystem.ActorOf(Props.Create(() => new ConsoleReaderActor(consoleWriterActor)), nameof(ConsoleReaderActor));
 
 
 			// tell console reader to begin
