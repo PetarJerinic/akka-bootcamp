@@ -11,21 +11,22 @@ namespace WinTail
         static void Main(string[] args)
         {
             // initialize MyActorSystem
-            // YOU NEED TO FILL IN HERE
-
-            PrintInstructions();
-
-            // time to make your first actors!
-            //YOU NEED TO FILL IN HERE
-            // make consoleWriterActor using these props: Props.Create(() => new ConsoleWriterActor())
-            // make consoleReaderActor using these props: Props.Create(() => new ConsoleReaderActor(consoleWriterActor))
+			MyActorSystem = ActorSystem.Create("MyActorSystem");
+	        
+	        PrintInstructions();
 
 
-            // tell console reader to begin
-            //YOU NEED TO FILL IN HERE
 
-            // blocks the main thread from exiting until the actor system is shut down
-            MyActorSystem.WhenTerminated.Wait();
+			// time to make your first actors!
+			var consoleWriterActor = MyActorSystem.ActorOf(Props.Create(() => new ConsoleWriterActor()));
+			var consoleReaderActor = MyActorSystem.ActorOf(Props.Create(() => new ConsoleReaderActor(consoleWriterActor)));
+
+
+			// tell console reader to begin
+			consoleReaderActor.Tell("start");
+
+			// blocks the main thread from exiting until the actor system is shut down
+			MyActorSystem.WhenTerminated.Wait();
         }
 
         private static void PrintInstructions()
